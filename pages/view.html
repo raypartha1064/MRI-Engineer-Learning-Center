@@ -1,0 +1,42 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>MRI Topic</title>
+<style>
+:root{--navy:#071a4b;--navy2:#0d2b68;--blue:#1675d1;--cyan:#2db4e8;--gold:#f5b800;--bg:#eef4fb;--card:#fff;--text:#15223d;--muted:#64748b;--border:#dce6f3}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
+body{min-height:100vh}
+header{background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff;padding:18px 24px;position:sticky;top:0;z-index:10;box-shadow:0 4px 14px #001a4d33}
+.top{max-width:1400px;margin:auto;display:flex;align-items:center;gap:18px}
+.logo{width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,var(--cyan),var(--blue));display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:900;box-shadow:inset 0 0 0 1px #ffffff44}
+.brand{font-weight:900;font-size:20px;line-height:1.1}.brand small{display:block;font-weight:500;opacity:.8;font-size:12px;margin-top:5px}
+.searchWrap{margin-left:auto;min-width:320px;max-width:500px;width:40%}
+.search{width:100%;padding:12px 14px;border-radius:12px;border:1px solid #ffffff33;background:#ffffff18;color:white;font-size:15px;outline:none}
+.search::placeholder{color:#d7e2f5}
+main{max-width:1400px;margin:auto;padding:24px}
+.hero{display:grid;grid-template-columns:1.5fr .9fr;gap:22px;background:linear-gradient(135deg,#071a4b,#0a4db8);color:white;border-radius:22px;padding:30px;box-shadow:0 16px 32px #071a4b20}
+.hero h1{font-size:clamp(34px,5vw,60px);margin:0 0 8px;letter-spacing:-1.5px}.hero p{font-size:18px;line-height:1.55;max-width:800px;color:#e6eefb}
+.heroPanel{background:#ffffff12;border:1px solid #ffffff26;border-radius:18px;padding:20px}.heroPanel strong{font-size:14px;color:#ffe28a}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px}.stat{background:#ffffff12;border-radius:12px;padding:14px;text-align:center}.stat b{display:block;font-size:25px;color:#fff}.stat span{font-size:11px;color:#dce8f8}
+.sectionTitle{font-size:25px;color:var(--navy);margin:30px 0 15px;display:flex;align-items:center;gap:10px}
+.sectionTitle:before{content:"";width:7px;height:28px;border-radius:5px;background:var(--gold)}
+.dashboard{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.book{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:20px;box-shadow:0 8px 20px #0b2b5f0c}
+.bookTop{display:flex;gap:15px;align-items:flex-start}.bookIcon{width:62px;height:62px;border-radius:16px;background:linear-gradient(135deg,var(--blue),var(--cyan));color:white;display:flex;align-items:center;justify-content:center;font-size:28px}
+.book h2{margin:0 0 7px;color:var(--navy);font-size:24px}.book p{margin:0 0 16px;color:var(--muted);line-height:1.45}
+.actions{display:flex;flex-wrap:wrap;gap:8px}.btn{display:inline-flex;align-items:center;gap:7px;padding:10px 13px;border-radius:10px;background:var(--blue);color:white;text-decoration:none;font-weight:750;font-size:14px}.btn.secondary{background:#eef5ff;color:var(--blue);border:1px solid #c9dcf4}
+.quickGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.quick{background:white;border:1px solid var(--border);border-radius:15px;padding:16px;min-height:105px;box-shadow:0 6px 16px #0b2b5f08}.quick .qicon{font-size:25px}.quick b{display:block;margin:9px 0 4px;color:var(--navy)}.quick span{font-size:12px;color:var(--muted)}
+.note{background:#fff8d9;border:1px solid #f3dc81;border-radius:14px;padding:15px 18px;margin-top:20px;color:#664e00}
+.results{margin-top:18px;display:none}.result{background:#fff;border:1px solid var(--border);border-radius:12px;padding:13px;margin:8px 0}.result small{color:var(--muted)}.result a{color:var(--blue);font-weight:800;text-decoration:none}
+.chapter{background:white;border:1px solid var(--border);border-radius:15px;margin:13px 0;overflow:hidden}.chapter summary{padding:16px 18px;background:linear-gradient(90deg,#edf4ff,#f7fbff);color:var(--navy);font-weight:850;font-size:17px;cursor:pointer;list-style:none}.chapter summary::-webkit-details-marker{display:none}
+.topic{display:grid;grid-template-columns:72px 1fr auto;gap:12px;align-items:center;padding:12px 16px;border-top:1px solid var(--border)}.topic:hover{background:#fbfdff}.sec{font-weight:850;color:var(--blue)}.topicTitle{font-weight:700}.open{padding:8px 11px;border-radius:9px;background:#eef5ff;color:var(--blue);font-weight:800;text-decoration:none}
+.breadcrumb{font-size:13px;color:var(--muted);margin-bottom:12px}.viewer{height:77vh;border-radius:14px;overflow:hidden;background:#111;box-shadow:0 10px 24px #0002}.viewer object{width:100%;height:100%}
+footer{max-width:1400px;margin:auto;padding:30px;text-align:center;color:#6b7890;font-size:12px}
+@media(max-width:900px){.hero{grid-template-columns:1fr}.dashboard{grid-template-columns:1fr}.quickGrid{grid-template-columns:repeat(2,1fr)}.searchWrap{min-width:0;width:45%}}
+@media(max-width:620px){header{padding:12px}.top{flex-wrap:wrap}.searchWrap{order:3;width:100%}.quickGrid{grid-template-columns:1fr}.topic{grid-template-columns:55px 1fr}.open{grid-column:2}.hero{padding:22px}main{padding:14px}}
+</style>
+</head><body>
+    <header><div class="top"><a href="../index.html" style="color:white;text-decoration:none;display:flex;align-items:center;gap:12px">
+    <div class="logo">MR</div><div class="brand">MRI Engineer Learning Center<small>Offline · Device Independent</small></div></a>
+    <div class="searchWrap"><input id="search" class="search" placeholder="Search DWI, FLAIR, low SNR, VSWR, prescan..."></div></div></header><main><div class="breadcrumb"><a href="../index.html">Home</a> / Topic</div><h1 id="title" style="color:var(--navy)"></h1>
+    <div class="actions" style="margin-bottom:14px"><a id="direct" class="btn" target="_blank">Open PDF directly</a><a class="btn secondary" href="javascript:history.back()">← Back</a></div>
+    <div class="viewer"><object id="pdf" type="application/pdf"><p style="color:white;padding:20px">This browser cannot embed the PDF. Use “Open PDF directly.”</p></object></div>
+    </main><script>const q=new URLSearchParams(location.search);const f=q.get('file')||'';const t=q.get('title')||'MRI Topic';document.getElementById('title').textContent=t;const u='../resources/'+f;document.getElementById('direct').href=u;document.getElementById('pdf').data=u;</script></body></html>
