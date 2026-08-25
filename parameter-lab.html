@@ -1,0 +1,17 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Parameter Lab</title><style>
+:root{--navy:#071a4b;--blue:#0a4db8;--gold:#f3b61f;--bg:#eef4fb;--ink:#16213a;--muted:#64748b;--line:#dce6f3}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}
+header{background:linear-gradient(135deg,var(--navy),#0c337a);color:white;padding:18px 24px}.wrap{max-width:1250px;margin:auto;padding:24px}
+h1{font-size:42px;margin:0 0 8px}.sub{color:#dce8f8;font-size:17px}.back{display:inline-block;margin-top:14px;color:white;text-decoration:none;font-weight:800}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}.card{background:white;border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:0 7px 18px #071a4b0c}
+.card h2{font-size:20px;color:var(--navy);margin:0 0 10px}.card h3{font-size:13px;color:var(--blue);margin:14px 0 5px;text-transform:uppercase}.card p,.card li{font-size:14px;line-height:1.45;color:#44536c}.card ul{padding-left:19px;margin:5px 0}
+.btn{display:inline-block;margin:8px 5px 0 0;padding:9px 11px;border-radius:9px;background:#edf4ff;color:var(--blue);text-decoration:none;font-weight:800;font-size:13px}
+.note{background:#fff8d9;border:1px solid #efd982;border-radius:13px;padding:14px 16px;margin:18px 0;color:#675000}footer{text-align:center;padding:28px;color:#718096;font-size:12px}
+</style></head><body><header><div style="max-width:1100px;margin:auto"><div style="color:#ffe28a;font-weight:800">MRI ENGINEER LEARNING CENTER · v1.1</div><h1>🎛️ Parameter Lab</h1><div class="sub">Quick directional guide to common MRI parameter trade-offs.</div><a class="back" href="index.html">← Back to Dashboard</a></div></header><main class="wrap"><div class="note">These are common directional tendencies; exact effects depend on sequence and implementation.</div><div class="grid">
+<article class="card"><h2>FOV ↑</h2><p><b>SNR ↑ · Resolution ↓ · Scan time ↔</b></p><p>Larger pixels/voxels if matrix is unchanged.</p></article>
+<article class="card"><h2>Matrix ↑</h2><p><b>SNR ↓ · Resolution ↑ · Scan time may ↑</b></p><p>Smaller in-plane pixels; phase matrix can affect time.</p></article>
+<article class="card"><h2>Slice Thickness ↑</h2><p><b>SNR ↑ · Through-plane resolution ↓</b></p><p>Larger voxel collects more signal.</p></article>
+<article class="card"><h2>NEX / Averages ↑</h2><p><b>SNR ↑ · Scan time ↑</b></p><p>SNR improves approximately with the square root of NEX.</p></article>
+<article class="card"><h2>Receiver Bandwidth ↑</h2><p><b>SNR ↓ · Chemical shift/distortion ↓</b></p><p>Wider bandwidth reduces SNR but can reduce some artifacts.</p></article>
+<article class="card"><h2>Parallel Imaging Acceleration ↑</h2><p><b>SNR ↓ · Scan time ↓</b></p><p>Trades SNR for speed; performance depends on coil geometry.</p></article>
+</div></main><footer>MRI Engineer Learning Center · Web Edition · Version 1.1 · Ray Partha</footer></body></html>
