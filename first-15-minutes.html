@@ -1,0 +1,70 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>First 15 Minutes — MRI Engineer Learning Center</title>
+<style>
+:root{
+  --navy:#071a4b;--navy2:#0d2f73;--blue:#0a4db8;--cyan:#2db4e8;--gold:#f3b61f;
+  --bg:#eef4fb;--ink:#16213a;--muted:#64748b;--line:#dce6f3;--white:#fff;
+  --green:#0f8a55;--red:#c73939;--orange:#cc7a00;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
+header{background:linear-gradient(135deg,var(--navy),var(--navy2));color:white;padding:18px 24px;box-shadow:0 4px 16px #001a4d30}
+.head{max-width:1250px;margin:auto}
+.kicker{color:#ffe28a;font-weight:850;letter-spacing:.8px}
+h1{font-size:clamp(34px,5vw,52px);margin:6px 0 8px}
+.sub{font-size:17px;color:#dce8f8;line-height:1.45;max-width:900px}
+.back{display:inline-block;margin-top:14px;color:white;text-decoration:none;font-weight:850}
+.wrap{max-width:1250px;margin:auto;padding:24px}
+.note{background:#fff8d9;border:1px solid #efd982;border-radius:13px;padding:14px 16px;margin:0 0 18px;color:#675000;line-height:1.45}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:16px}
+.card{background:white;border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:0 7px 18px #071a4b0c}
+.card h2{margin:0 0 10px;color:var(--navy);font-size:21px}
+.card h3{font-size:13px;text-transform:uppercase;color:var(--blue);letter-spacing:.5px;margin:14px 0 6px}
+.card p,.card li{font-size:14px;line-height:1.45;color:#44536c}
+.btn{display:inline-block;padding:9px 12px;border-radius:9px;background:#edf4ff;color:var(--blue);text-decoration:none;font-weight:800;font-size:13px;margin:5px 5px 0 0;border:1px solid #d6e5f6}
+.choice{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
+.choice button{border:0;border-radius:10px;padding:10px 13px;font-weight:850;cursor:pointer;font-size:14px}
+.up{background:#e7f7ef;color:var(--green)}
+.down{background:#fdecec;color:var(--red)}
+.reset{background:#eef2f7;color:#46556d}
+.result{margin-top:12px;border-top:1px solid var(--line);padding-top:12px}
+.metric{display:inline-block;padding:7px 9px;border-radius:8px;margin:4px 4px 0 0;font-weight:800;font-size:13px;background:#f3f6fa}
+.good{color:var(--green)}.bad{color:var(--red)}.neutral{color:#59677d}.warn{color:var(--orange)}
+.flow{display:none;margin-top:16px}
+.flow.active{display:block}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.step{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px}
+.stepnum{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--blue);color:#fff;font-weight:900;margin-bottom:10px}
+.bigchoice{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.bigchoice button{background:white;border:1px solid var(--line);border-radius:14px;padding:16px;text-align:left;cursor:pointer;box-shadow:0 4px 12px #071a4b0a}
+.bigchoice button:hover{border-color:#9fbce5;background:#fbfdff}
+.bigchoice b{display:block;color:var(--navy);font-size:17px;margin-bottom:5px}
+footer{text-align:center;padding:28px;color:#718096;font-size:12px}
+@media(max-width:650px){.wrap{padding:14px}}
+</style>
+</head><body>
+<header><div class="head"><div class="kicker">MRI ENGINEER LEARNING CENTER · v1.2</div>
+<h1>⏱️ First 15 Minutes</h1>
+<div class="sub">A field-oriented starting point for an MRI engineer arriving at a down system or image-quality complaint. Start broad, isolate the domain, then go deeper.</div>
+<a class="back" href="index.html">← Back to Dashboard</a></div></header>
+<main class="wrap">
+<div class="note"><b>Safety first:</b> This page is an orientation aid, not a substitute for site safety procedures, LOTO requirements, MRI safety rules, or OEM service documentation.</div>
+<h2 style="color:var(--navy)">What is the primary complaint?</h2>
+<div class="bigchoice"><button onclick="showFlow('no-scan')"><span style="font-size:28px">🚫</span><b>Won't Scan</b><span>Scanner will not start, aborts, or is unavailable</span></button><button onclick="showFlow('image')"><span style="font-size:28px">🩻</span><b>Image Quality</b><span>Images look wrong, noisy, distorted, shaded, or artifacted</span></button><button onclick="showFlow('coil')"><span style="font-size:28px">📡</span><b>Coil / Signal</b><span>Low signal, dropout, coil-specific complaint</span></button><button onclick="showFlow('gradient')"><span style="font-size:28px">🧲</span><b>Gradient</b><span>Distortion, ghosting, unusual gradient behavior or faults</span></button><button onclick="showFlow('rf')"><span style="font-size:28px">📻</span><b>RF / Prescan</b><span>RF artifact, prescan, center-frequency or calibration issue</span></button><button onclick="showFlow('workflow')"><span style="font-size:28px">💻</span><b>Software / Workflow</b><span>Reconstruction, transfer, archive, workstation or workflow issue</span></button></div>
+<div id="flow" class="flow"></div>
+</main>
+<script>
+const FLOWS={"no-scan": {"title": "Scanner Will Not Start / Scan", "steps": ["Confirm exact operator message and whether the failure is patient/sequence specific or system-wide.", "Check obvious system state: emergency stops, room/interlock status, table position, coil selection, and active alerts.", "Review recent system messages/logs and ask what changed immediately before the failure.", "Try a simple known-good sequence or approved phantom workflow if site policy allows.", "Use the failure domain to branch: RF, gradient, table, coil, software/workflow, or safety interlock."], "links": [["Engineer Quick Reference", "resources/MRI_Applications_Engineers_Quick_Reference_Conclusion.pdf"], ["RF Troubleshooting", "resources/GE_MRI_RF_Troubleshooting_Recognizing_Failures_From_Image.pdf"], ["Gradient Troubleshooting", "resources/GE_MRI_Gradient_Troubleshooting_Recognizing_Failures_From_Image.pdf"]]}, "image": {"title": "Image Quality Complaint", "steps": ["Ask to see the actual image and identify the pattern: low SNR, shading, zipper, ghosting, distortion, dropout, wrap, or fat-sat failure.", "Compare with prior images and a known-good protocol. Determine whether the issue follows one patient, one protocol, one coil, or all scans.", "Check positioning, coil selection, FOV/matrix/slice/NEX/bandwidth, prescan, center frequency, and shim as appropriate.", "Repeat with one controlled change at a time.", "If repeatable across known-good conditions, move toward RF, gradient, coil, B0/shim, or reconstruction troubleshooting."], "links": [["Image Problem?", "image-problem.html"], ["Protocol vs Hardware", "resources/MRI_Applications_2_9_Protocol_vs_Hardware_Is_It_Really_a_Scanner_Problem.pdf"], ["Engineer Quick Reference", "resources/MRI_Applications_Engineers_Quick_Reference_Conclusion.pdf"]]}, "coil": {"title": "Coil / Signal Complaint", "steps": ["Identify the exact coil and whether the complaint follows that coil only.", "Check connector engagement, cable routing, patient positioning, coil element selection, and visible damage.", "Compare with another approved known-good coil or coil configuration if appropriate.", "Review prescan/RG behavior and whether signal loss is localized, channel-like, or global.", "If repeatable, continue with coil tuning/matching, receive chain, or channel diagnostics per OEM procedure."], "links": [["RF Coils", "resources/GE_MRI_RF_Coils_How_They_Work_First_Version.pdf"], ["Coil Tuning & Matching", "resources/GE_MRI_Coil_Tuning_and_Matching_Getting_It_Right.pdf"], ["RF Receive Chain", "resources/GE_MRI_RF_Receive_Chain_Proton_Signal_to_Digital_Data.pdf"]]}, "gradient": {"title": "Gradient / Distortion / Noise Complaint", "steps": ["Determine whether the complaint is geometric distortion, ghosting, sequence abort, unusual gradient noise, or a logged gradient fault.", "Check whether it occurs on one sequence or across multiple known-good protocols.", "Review gradient-related system messages, heating/cooling status, and recent service history.", "Use an approved phantom/known-good test to separate patient motion or protocol effects from hardware.", "If repeatable, proceed with GPA/gradient subsystem diagnostics using OEM procedures."], "links": [["Gradient Signal Chain", "resources/GE_MRI_Gradient_Signal_Chain_From_Pulse_Sequence_to_Spatial_Encoding.pdf"], ["GPA Basics", "resources/GE_MRI_Gradient_Power_Amplifier_GPA_Basics.pdf"], ["Gradient Troubleshooting", "resources/GE_MRI_Gradient_Troubleshooting_Recognizing_Failures_From_Image.pdf"]]}, "rf": {"title": "RF / Prescan / Calibration Complaint", "steps": ["Determine whether the issue is transmit, receive, prescan, center frequency, tuning/matching, or image artifact.", "Check whether the problem follows one coil or all coils and whether prescan values are abnormal.", "Review center frequency, gain behavior, B1/flip-angle calibration, and obvious RF interference clues.", "Repeat a known-good test with one controlled variable changed at a time.", "If repeatable, use RF signal-chain and OEM RF diagnostics to isolate transmit, T/R, coil, preamp, or receive path."], "links": [["Prescan Process", "resources/GE_MRI_Prescan_Process_Landscape_Poster.pdf"], ["RF Transmit Chain", "resources/GE_MRI_RF_Transmit_Chain_B1_Excitation_Landscape.pdf"], ["RF Troubleshooting", "resources/GE_MRI_RF_Troubleshooting_Recognizing_Failures_From_Image.pdf"]]}, "workflow": {"title": "Software / Workflow / Reconstruction Complaint", "steps": ["Clarify whether the issue is scan prescription, reconstruction, image transfer, archive/PACS, or workstation behavior.", "Check whether acquisition completed successfully and whether raw data exists.", "Review operator messages, queue status, network/archive state, and recent software/workflow changes.", "Compare with another simple known-good exam or reconstruction path if appropriate.", "Escalate to the correct domain only after separating acquisition hardware from reconstruction/workflow."], "links": [["Image Reconstruction", "resources/GE_MRI_Image_Reconstruction_From_Raw_Data_to_Final_Image.pdf"], ["K-Space Basics", "resources/GE_MRI_K_Space_01_Basics_What_Is_K_Space.pdf"], ["Engineer Quick Reference", "resources/MRI_Applications_Engineers_Quick_Reference_Conclusion.pdf"]]}};
+function showFlow(key){
+ const f=FLOWS[key];
+ const steps=f.steps.map((s,i)=>`<div class="step"><div class="stepnum">${i+1}</div><p>${s}</p></div>`).join('');
+ const links=f.links.map(x=>`<a class="btn" href="${x[1]}" target="_blank">${x[0]}</a>`).join('');
+ const box=document.getElementById('flow');
+ box.className='flow active';
+ box.innerHTML=`<h2 style="color:var(--navy);margin-top:26px">${f.title}</h2>
+ <div class="steps">${steps}</div>
+ <div class="card" style="margin-top:16px"><h2>Go deeper</h2>${links}</div>`;
+ box.scrollIntoView({behavior:'smooth',block:'start'});
+}
+</script>
+<footer>MRI Engineer Learning Center · Web Edition · Version 1.2 · Ray Partha</footer></body></html>

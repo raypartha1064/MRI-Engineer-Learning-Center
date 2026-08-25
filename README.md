@@ -17,3 +17,9 @@ This package is a static site: HTML, CSS, JavaScript, and local PDF files only.
 No server-side software or database is required.
 
 Author: Ray Partha
+
+
+## Version 1.2
+- Interactive Parameter Lab with Increase/Decrease controls
+- First 15 Minutes field-triage tool
+- Retains Image Problem? troubleshooting from v1.1

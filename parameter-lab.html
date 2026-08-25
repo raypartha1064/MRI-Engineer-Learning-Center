@@ -1,17 +1,123 @@
-<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Parameter Lab</title><style>
-:root{--navy:#071a4b;--blue:#0a4db8;--gold:#f3b61f;--bg:#eef4fb;--ink:#16213a;--muted:#64748b;--line:#dce6f3}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}
-header{background:linear-gradient(135deg,var(--navy),#0c337a);color:white;padding:18px 24px}.wrap{max-width:1250px;margin:auto;padding:24px}
-h1{font-size:42px;margin:0 0 8px}.sub{color:#dce8f8;font-size:17px}.back{display:inline-block;margin-top:14px;color:white;text-decoration:none;font-weight:800}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}.card{background:white;border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:0 7px 18px #071a4b0c}
-.card h2{font-size:20px;color:var(--navy);margin:0 0 10px}.card h3{font-size:13px;color:var(--blue);margin:14px 0 5px;text-transform:uppercase}.card p,.card li{font-size:14px;line-height:1.45;color:#44536c}.card ul{padding-left:19px;margin:5px 0}
-.btn{display:inline-block;margin:8px 5px 0 0;padding:9px 11px;border-radius:9px;background:#edf4ff;color:var(--blue);text-decoration:none;font-weight:800;font-size:13px}
-.note{background:#fff8d9;border:1px solid #efd982;border-radius:13px;padding:14px 16px;margin:18px 0;color:#675000}footer{text-align:center;padding:28px;color:#718096;font-size:12px}
-</style></head><body><header><div style="max-width:1100px;margin:auto"><div style="color:#ffe28a;font-weight:800">MRI ENGINEER LEARNING CENTER · v1.1</div><h1>🎛️ Parameter Lab</h1><div class="sub">Quick directional guide to common MRI parameter trade-offs.</div><a class="back" href="index.html">← Back to Dashboard</a></div></header><main class="wrap"><div class="note">These are common directional tendencies; exact effects depend on sequence and implementation.</div><div class="grid">
-<article class="card"><h2>FOV ↑</h2><p><b>SNR ↑ · Resolution ↓ · Scan time ↔</b></p><p>Larger pixels/voxels if matrix is unchanged.</p></article>
-<article class="card"><h2>Matrix ↑</h2><p><b>SNR ↓ · Resolution ↑ · Scan time may ↑</b></p><p>Smaller in-plane pixels; phase matrix can affect time.</p></article>
-<article class="card"><h2>Slice Thickness ↑</h2><p><b>SNR ↑ · Through-plane resolution ↓</b></p><p>Larger voxel collects more signal.</p></article>
-<article class="card"><h2>NEX / Averages ↑</h2><p><b>SNR ↑ · Scan time ↑</b></p><p>SNR improves approximately with the square root of NEX.</p></article>
-<article class="card"><h2>Receiver Bandwidth ↑</h2><p><b>SNR ↓ · Chemical shift/distortion ↓</b></p><p>Wider bandwidth reduces SNR but can reduce some artifacts.</p></article>
-<article class="card"><h2>Parallel Imaging Acceleration ↑</h2><p><b>SNR ↓ · Scan time ↓</b></p><p>Trades SNR for speed; performance depends on coil geometry.</p></article>
-</div></main><footer>MRI Engineer Learning Center · Web Edition · Version 1.1 · Ray Partha</footer></body></html>
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Parameter Lab — MRI Engineer Learning Center</title>
+<style>
+:root{
+  --navy:#071a4b;--navy2:#0d2f73;--blue:#0a4db8;--cyan:#2db4e8;--gold:#f3b61f;
+  --bg:#eef4fb;--ink:#16213a;--muted:#64748b;--line:#dce6f3;--white:#fff;
+  --green:#0f8a55;--red:#c73939;--orange:#cc7a00;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
+header{background:linear-gradient(135deg,var(--navy),var(--navy2));color:white;padding:18px 24px;box-shadow:0 4px 16px #001a4d30}
+.head{max-width:1250px;margin:auto}
+.kicker{color:#ffe28a;font-weight:850;letter-spacing:.8px}
+h1{font-size:clamp(34px,5vw,52px);margin:6px 0 8px}
+.sub{font-size:17px;color:#dce8f8;line-height:1.45;max-width:900px}
+.back{display:inline-block;margin-top:14px;color:white;text-decoration:none;font-weight:850}
+.wrap{max-width:1250px;margin:auto;padding:24px}
+.note{background:#fff8d9;border:1px solid #efd982;border-radius:13px;padding:14px 16px;margin:0 0 18px;color:#675000;line-height:1.45}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:16px}
+.card{background:white;border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:0 7px 18px #071a4b0c}
+.card h2{margin:0 0 10px;color:var(--navy);font-size:21px}
+.card h3{font-size:13px;text-transform:uppercase;color:var(--blue);letter-spacing:.5px;margin:14px 0 6px}
+.card p,.card li{font-size:14px;line-height:1.45;color:#44536c}
+.btn{display:inline-block;padding:9px 12px;border-radius:9px;background:#edf4ff;color:var(--blue);text-decoration:none;font-weight:800;font-size:13px;margin:5px 5px 0 0;border:1px solid #d6e5f6}
+.choice{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
+.choice button{border:0;border-radius:10px;padding:10px 13px;font-weight:850;cursor:pointer;font-size:14px}
+.up{background:#e7f7ef;color:var(--green)}
+.down{background:#fdecec;color:var(--red)}
+.reset{background:#eef2f7;color:#46556d}
+.result{margin-top:12px;border-top:1px solid var(--line);padding-top:12px}
+.metric{display:inline-block;padding:7px 9px;border-radius:8px;margin:4px 4px 0 0;font-weight:800;font-size:13px;background:#f3f6fa}
+.good{color:var(--green)}.bad{color:var(--red)}.neutral{color:#59677d}.warn{color:var(--orange)}
+.flow{display:none;margin-top:16px}
+.flow.active{display:block}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.step{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px}
+.stepnum{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--blue);color:#fff;font-weight:900;margin-bottom:10px}
+.bigchoice{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.bigchoice button{background:white;border:1px solid var(--line);border-radius:14px;padding:16px;text-align:left;cursor:pointer;box-shadow:0 4px 12px #071a4b0a}
+.bigchoice button:hover{border-color:#9fbce5;background:#fbfdff}
+.bigchoice b{display:block;color:var(--navy);font-size:17px;margin-bottom:5px}
+footer{text-align:center;padding:28px;color:#718096;font-size:12px}
+@media(max-width:650px){.wrap{padding:14px}}
+</style>
+</head><body>
+<header><div class="head"><div class="kicker">MRI ENGINEER LEARNING CENTER · v1.2</div>
+<h1>🎛️ Interactive Parameter Lab</h1>
+<div class="sub">Choose Increase or Decrease for a parameter and see the expected direction of change in SNR, spatial resolution, scan time, and common artifact behavior.</div>
+<a class="back" href="index.html">← Back to Dashboard</a></div></header>
+<main class="wrap">
+<div class="note"><b>Teaching guide:</b> These are common directional tendencies. Exact effects depend on sequence, anatomy, scanner implementation, and which encoding dimension is changed.</div>
+<div class="grid">
+    <article class="card">
+      <h2>FOV</h2>
+      <div class="choice">
+        <button class="up" onclick="showParam(0,'up')">↑ Increase</button>
+        <button class="down" onclick="showParam(0,'down')">↓ Decrease</button>
+        <button class="reset" onclick="clearParam(0)">Reset</button>
+      </div>
+      <div id="param-0" class="result"><p>Select Increase or Decrease.</p></div>
+    </article>
+    <article class="card">
+      <h2>Matrix</h2>
+      <div class="choice">
+        <button class="up" onclick="showParam(1,'up')">↑ Increase</button>
+        <button class="down" onclick="showParam(1,'down')">↓ Decrease</button>
+        <button class="reset" onclick="clearParam(1)">Reset</button>
+      </div>
+      <div id="param-1" class="result"><p>Select Increase or Decrease.</p></div>
+    </article>
+    <article class="card">
+      <h2>Slice Thickness</h2>
+      <div class="choice">
+        <button class="up" onclick="showParam(2,'up')">↑ Increase</button>
+        <button class="down" onclick="showParam(2,'down')">↓ Decrease</button>
+        <button class="reset" onclick="clearParam(2)">Reset</button>
+      </div>
+      <div id="param-2" class="result"><p>Select Increase or Decrease.</p></div>
+    </article>
+    <article class="card">
+      <h2>NEX / Averages</h2>
+      <div class="choice">
+        <button class="up" onclick="showParam(3,'up')">↑ Increase</button>
+        <button class="down" onclick="showParam(3,'down')">↓ Decrease</button>
+        <button class="reset" onclick="clearParam(3)">Reset</button>
+      </div>
+      <div id="param-3" class="result"><p>Select Increase or Decrease.</p></div>
+    </article>
+    <article class="card">
+      <h2>Receiver Bandwidth</h2>
+      <div class="choice">
+        <button class="up" onclick="showParam(4,'up')">↑ Increase</button>
+        <button class="down" onclick="showParam(4,'down')">↓ Decrease</button>
+        <button class="reset" onclick="clearParam(4)">Reset</button>
+      </div>
+      <div id="param-4" class="result"><p>Select Increase or Decrease.</p></div>
+    </article>
+    <article class="card">
+      <h2>Parallel Imaging Acceleration</h2>
+      <div class="choice">
+        <button class="up" onclick="showParam(5,'up')">↑ Increase</button>
+        <button class="down" onclick="showParam(5,'down')">↓ Decrease</button>
+        <button class="reset" onclick="clearParam(5)">Reset</button>
+      </div>
+      <div id="param-5" class="result"><p>Select Increase or Decrease.</p></div>
+    </article></div>
+</main>
+<script>
+const DATA=[{"name": "FOV", "up": {"snr": "↑", "res": "↓", "time": "↔", "artifact": "Wrap risk ↓", "note": "With matrix unchanged, larger FOV makes larger pixels/voxels: more signal, less spatial detail."}, "down": {"snr": "↓", "res": "↑", "time": "↔", "artifact": "Wrap risk ↑", "note": "Smaller FOV improves in-plane detail but reduces voxel signal and can increase aliasing risk."}}, {"name": "Matrix", "up": {"snr": "↓", "res": "↑", "time": "May ↑", "artifact": "Pixelation ↓", "note": "Smaller pixels improve detail. Increasing phase matrix commonly increases scan time."}, "down": {"snr": "↑", "res": "↓", "time": "May ↓", "artifact": "Pixelation ↑", "note": "Larger pixels improve signal and may shorten the scan, but reduce spatial detail."}}, {"name": "Slice Thickness", "up": {"snr": "↑", "res": "↓", "time": "Usually ↔", "artifact": "Partial volume ↑", "note": "A thicker slice contains more spins and more signal, at the expense of through-plane detail."}, "down": {"snr": "↓", "res": "↑", "time": "May ↑", "artifact": "Partial volume ↓", "note": "Thinner slices improve through-plane resolution but reduce SNR; coverage may require more slices."}}, {"name": "NEX / Averages", "up": {"snr": "↑", "res": "↔", "time": "↑", "artifact": "Random noise ↓", "note": "SNR improves approximately with the square root of NEX; scan time rises roughly in proportion to NEX."}, "down": {"snr": "↓", "res": "↔", "time": "↓", "artifact": "Random noise ↑", "note": "Lower NEX shortens the scan but gives up SNR."}}, {"name": "Receiver Bandwidth", "up": {"snr": "↓", "res": "↔", "time": "May ↓", "artifact": "Chemical shift/distortion ↓", "note": "Higher bandwidth reduces SNR but can reduce chemical shift, distortion, and minimum TE."}, "down": {"snr": "↑", "res": "↔", "time": "May ↑", "artifact": "Chemical shift/distortion ↑", "note": "Lower bandwidth increases SNR but can increase chemical shift and susceptibility-related distortion."}}, {"name": "Parallel Imaging Acceleration", "up": {"snr": "↓", "res": "Usually ↔", "time": "↓", "artifact": "Reconstruction sensitivity ↑", "note": "Higher acceleration shortens the scan, but SNR falls and coil geometry/reconstruction become more important."}, "down": {"snr": "↑", "res": "Usually ↔", "time": "↑", "artifact": "Reconstruction sensitivity ↓", "note": "Lower acceleration gives back SNR and robustness but increases scan time."}}];
+function cls(v){if(v.includes('↑'))return 'good'; if(v.includes('↓'))return 'bad'; if(v.includes('May'))return 'warn'; return 'neutral';}
+function showParam(i,dir){
+ const d=DATA[i][dir]; const word=dir==='up'?'Increase':'Decrease';
+ document.getElementById('param-'+i).innerHTML=
+ `<h3>${word} ${DATA[i].name}</h3>
+ <span class="metric ${cls(d.snr)}">SNR ${d.snr}</span>
+ <span class="metric ${cls(d.res)}">Resolution ${d.res}</span>
+ <span class="metric ${cls(d.time)}">Scan Time ${d.time}</span>
+ <span class="metric neutral">${d.artifact}</span>
+ <p>${d.note}</p>`;
+}
+function clearParam(i){document.getElementById('param-'+i).innerHTML='<p>Select Increase or Decrease.</p>';}
+</script>
+<footer>MRI Engineer Learning Center · Web Edition · Version 1.2 · Ray Partha</footer></body></html>
